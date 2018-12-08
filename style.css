@@ -1,0 +1,486 @@
+@charset "utf-8";
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* ここまでリセットCSS */
+
+body {
+  font-family: system-ui, "Hiragino Kaku Gothic ProN", sans-serif;
+}
+
+/* header */
+nav {
+  font-family: "Times New Roman";
+  font-style: italic;
+  height: 80px;
+  width: 100%;
+  background-color: #007BC7;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 30px;
+  position: relative;
+}
+
+nav>h1 {
+  font-size: 35px;
+  font-weight: bold;
+  height: 100%;
+  line-height: 80px;
+}
+
+nav>ul {
+  font-size: 25px;
+  display: flex;
+  height: 100%;
+  line-height: 80px;
+}
+
+nav li {
+  height: 100%;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  height: 100%;
+  width: 150px;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 0 20px;
+}
+
+nav a:hover {
+  text-shadow: 5px 5px 2px;
+}
+
+.flash {
+  font-size: 20px;
+  font-weight: bold;
+  height: 0;
+  width: 100%;
+  line-height: 60px;
+  text-align: center;
+  background-color: rgba(140, 255, 255, 0.3);
+  color: #fff;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  overflow: hidden;
+  animation: displayFlash 4s linear;
+}
+
+@keyframes displayFlash {
+  0%{height: 0;}
+  5%{height: 30px;}
+  10%{height: 60px;}
+  90%{height: 60px;}
+  95%{height: 30px;}
+  100%{height: 0;}
+}
+
+/* footer */
+footer {
+  width: 100%;
+  height: 150px;
+  background-color: #007BC7;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* main background */
+.article {
+  font-family: "Times New Roman";
+  font-style: italic;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* top, signup, login, logout */
+.top-article {
+  height: 750px;
+  background-image: url(images/img.jpeg);
+  background-size: cover;
+  background-position: center;
+}
+
+/* top */
+.top-box {
+  color: white;
+  text-align: center;
+}
+
+.top-title {
+  font-size: 110px;
+  margin-bottom: 30px;
+  transition: text-shadow 1s linear;
+}
+
+.top-article:hover .top-title {
+  text-shadow: 20px 10px 13px;
+}
+
+.top-article p {
+  font-size: 20px;
+}
+
+.top-link-box {
+  width: 50%;
+  height: 80%;
+  box-sizing: border-box;
+  margin: 50px auto;
+}
+
+.top-link-box>a {
+  font-size: 35px;
+  text-decoration: none;
+  color: white;
+  display: block;
+  margin: 10px auto;
+  padding: 10px 0;
+  width: 60%;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: box-shadow 1s linear;
+}
+
+.top-article:hover .top-link-box > a {
+  box-shadow: 10px 10px 10px #222;
+}
+
+.top-link-box>a:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* signup */
+.form-box {
+  width: 35%;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  box-shadow: 10px 10px 30px #222;
+  animation: display 0.4s linear;
+}
+
+@keyframes display {
+  0%{opacity: 0.2;}
+  50%{opacity: 0.5;}
+  100%{opacity: 1;}
+}
+
+.form-title {
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.top-article form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.top-article input {
+  width: 100%;
+  height: 40px;
+  font-size: 20px;
+  box-sizing: border-box;
+  padding: 0 15px;
+  border-radius: 5px;
+}
+
+.top-article label {
+  margin-top: 20px;
+  display: block;
+  color: #fff;
+}
+
+.top-article label:nth-of-type(1) {
+  margin-top: 0;
+}
+
+.submit {
+  margin-top: 50px;
+  background-color: #55aaC7;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.form-box > a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  margin: 30px auto;
+  padding: 10px 0;
+  width: 40%;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+}
+
+/* main */
+.main-article {
+  background-color: #333;
+}
+
+.main-box {
+  width: 80%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin: 80px 0;
+  animation: display 0.4s linear;
+  min-height: 600px;
+}
+
+.main-article h2 {
+  font-size: 60px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  transition: 0.5s linear;
+  margin-bottom: 30px;
+}
+
+.main-article:hover h2 {
+  text-shadow: 5px 5px 10px;
+  border-bottom: 3px solid #55aaC7;
+  box-shadow: 0 0 10px #55aaC7;
+}
+
+.main-article hr {
+  margin-bottom: 40px;
+}
+
+.post {
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #777;
+  background-color: #fff;
+  color: #555;
+}
+
+.post h3, .post > h4, .descriptions {
+  margin-bottom: 15px;
+}
+
+.post h3 {
+  font-size: 20px;
+}
+
+.post > h4 {
+  font-size: 35px;
+  font-weight: bold;
+  border-bottom: 3px solid #55aaC7;
+  box-shadow: 0 0 10px #55aaC7;
+  padding: 10px;
+}
+
+/* posts_index */
+.post-obj {
+  width: 100%;
+  margin-bottom: 30px;
+  position: relative;
+  padding: 30px;
+}
+
+.descriptions {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.descriptions > img {
+  width: 500px;
+  height: 350px;
+}
+
+.descriptions > p {
+  font-size: 20px;
+  padding: 30px;
+  width: 100%;
+}
+
+.post-flex-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-delete-wrapper {
+  margin-right: 20px;
+  display: flex;
+}
+
+.edit-delete-wrapper > a, .edit-delete-wrapper button {
+  margin-right: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: #555;
+  background-color: rgba(200,200,200,0.3);
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.post-obj > a {
+  display: inline-block;
+  padding: 20px;
+  font-size: 30px;
+  color: #fff;
+  background-color: #333;
+  text-decoration: none;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.post-obj > a:hover {
+  box-shadow: 0 5px 5px #000;
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+}
+
+.nonobj-message {
+  width: 80%;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+.nonobj-message > p {
+  font-size: 25px;
+  color: #555;
+  display: inline-block;
+}
+
+
+/* post_show */
+.post-body {
+  width: 100%;
+  padding: 30px 80px;
+}
+
+.post-body > img {
+  width: 800px;
+  height: 500px;
+  display: block;
+  margin: 20px auto;
+}
+
+.post-body > p {
+  font-size: 20px;
+}
+
+/* post_create */
+.post-form {
+  width: 70%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px 30px;
+}
+
+.post-form label {
+  font-size: 20px;
+  display: block;
+  border-bottom: 3px solid #55aaC7;
+  box-shadow: 0 5px 10px #55aaC7;
+}
+
+.post-form input:nth-of-type(1), .post-form input:nth-of-type(2), .post-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.post-form textarea:nth-of-type(1) {
+  height: 100px;
+}
+
+.post-form textarea:nth-of-type(2) {
+  height: 700px;
+}
+
+.post-submit {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 0;
+  background-color: #55aaC7;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 共通CSS */
+.error {
+  color: hsl(0, 87%, 63%);
+  text-align: center;
+  margin: 25px 0;
+}
+
+.error-resize {
+  font-size: 25px;
+}
