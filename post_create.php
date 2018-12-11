@@ -64,7 +64,7 @@ if (!empty($_POST['submit'])) {
                     'body' => $body,
                     'user_id' => $user_id
                   );
-      $new_post = Post::create($post); // postを新規作成
+      $new_post = new Post($post); // postを新規作成
       setFlash("投稿しました");
       header("location: post_show.php?post_id={$new_post->id}");
       exit();

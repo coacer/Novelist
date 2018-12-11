@@ -11,21 +11,12 @@ class User {
   //クラスメソッド
 
   // Userインスタンス生成メソッド
-  public static function create($name, $email, $password) {
-    try{
-
-      $new_user = new self; // インスタンス生成
+  public function __construct($name, $email, $password) {
 
       // 値をプロパティに格納
-      $new_user->name = $name;
-      $new_user->email = $email;
-      $new_user->password = $password;
-
-      return $new_user;
-
-    } catch (PDOException $e) {
-      return $e->getMessage();
-    }
+      $this->name = $name;
+      $this->email = $email;
+      $this->password = $password;
   }
 
   // データ抽出メソッド

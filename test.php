@@ -13,7 +13,7 @@ require_once('dbinfoset.php');
 require_once('User_class.php');
 
 
-$user = User::create('coacer', 'coacer@vate.com', 'password');
+$user = new User('coacer', 'coacer@vate.com', 'password');
 $user->save();
 
 echo $user->id;
@@ -27,7 +27,7 @@ echo $user->name;
 echo $user->email;
 echo $user->password;
 
-$user = User::create('coacer3', 'coacer3@vate.com', 'password');
+$user = new User('coacer3', 'coacer3@vate.com', 'password');
 $user->save();
 
 echo $user->id;
