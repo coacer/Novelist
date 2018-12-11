@@ -10,13 +10,10 @@ class Post {
   public $body;
   public $user_id;
 
-  // クラスメソッド
-
   // Postインスタンス生成メソッド
-  public static function create($post) {
+  public function __construct($post) {
     try{
 
-      $new_post = new self; // インスタンス生成
       // DBに値を格納
       global $pdo; // 'dbinfoset.php'の$pdoをグローバル宣言
       $table_name = self::$table_name; // sql分に直接書き込めないので変数格納
@@ -30,21 +27,21 @@ class Post {
       $sql->execute();
 
       // 値をプロパティに格納
-      $new_post->id = $pdo->lastinsertid();
-      $new_post->title = $post['title'];
-      $new_post->description = $post['description'];
-      $new_post->image = $post['image'];
-      $new_post->image_type = $post['image_type'];
-      $new_post->body = $post['body'];
-      $new_post->user_id = $post['user_id'];
-
-      return $new_post;
+      $this->id = $pdo->lastinsertid();
+      $this->title = $post['title'];
+      $this->description = $post['description'];
+      $this->image = $post['image'];
+      $this->image_type = $post['image_type'];
+      $this->body = $post['body'];
+      $this->user_id = $post['user_id'];
 
     } catch (PDOException $e) {
       return $e->getMessage();
     }
   }
 
+  // クラスメソッド
+  
   // 全データ取得メソッド
   public static function all() {
     try {

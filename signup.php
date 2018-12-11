@@ -21,7 +21,7 @@ if (!empty($_POST['signup'])) {
   $password = $_POST['password'];
   $password_confirmation = $_POST['password_confirmation'];
   if (!empty($username) && !empty($email) && !empty($password) && !empty($password_confirmation) && $password === $password_confirmation) {
-    $user = User::create($username, $email, $password);
+    $user = new User($username, $email, $password);
     if($user->save()) {
       login($user);
       setFlash("新規登録が完了しました");
