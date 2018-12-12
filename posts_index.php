@@ -34,7 +34,7 @@ $posts = Post::all();
           <h4><?= $post['title'] ?></h4>
           <div class="descriptions">
             <?php $image_url = "post_image.php?post_id={$post['id']}"; ?>
-            <img src="<?= $image_url ?>" alt="post image">
+            <img src="<?= $image_url ?>" alt="post image" style="width: 500px; height: 350px;">
             <p><?= $post['description'] ?></p>
           </div>
           <a href="post_show.php?post_id=<?= $post['id'] ?>">Read</a>

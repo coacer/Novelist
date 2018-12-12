@@ -14,20 +14,8 @@ class Post {
   public function __construct($post) {
     try{
 
-      // DBに値を格納
-      global $pdo; // 'dbinfoset.php'の$pdoをグローバル宣言
-      $table_name = self::$table_name; // sql分に直接書き込めないので変数格納
-      $sql = $pdo->prepare("INSERT INTO {$table_name} (title, description, image, image_type, body, user_id) VALUES (:title, :description, :image, :image_type, :body, :user_id)");
-      $sql->bindParam(':title', $post['title']);
-      $sql->bindParam(':description', $post['description']);
-      $sql->bindParam(':image', $post['image'], PDO::PARAM_LOB);
-      $sql->bindParam(':image_type', $post['image_type']);
-      $sql->bindParam(':body', $post['body']);
-      $sql->bindParam(':user_id', $post['user_id']);
-      $sql->execute();
-
       // 値をプロパティに格納
-      $this->id = $pdo->lastinsertid();
+      
       $this->title = $post['title'];
       $this->description = $post['description'];
       $this->image = $post['image'];
@@ -60,20 +48,14 @@ class Post {
   public static function findBy($colName, $value) {
     try {
 
-      $new_post = new self;
       global $pdo; // 'dbinfoset.php'の$pdoをグローバル定義
       $table_name = self::$table_name; // sql分に直接書き込めないので変数格納
       $sql = "SELECT * FROM {$table_name} where {$colName}={$value}";
       $result = $pdo->query($sql);
       $result = $result->fetch();
-
+      
+      $new_post = new self($result);
       $new_post->id = $result['id'];
-      $new_post->title = $result['title'];
-      $new_post->description = $result['description'];
-      $new_post->image = $result['image'];
-      $new_post->image_type = $result['image_type'];
-      $new_post->body = $result['body'];
-      $new_post->user_id = $result['user_id'];
 
       return $new_post;
       
@@ -83,6 +65,31 @@ class Post {
   }
 
   // インスタンスメソッド
+
+  // インスタンス保存メソッド
+  public function save() {
+    try {
+
+     // DBに値を格納
+     global $pdo; // 'dbinfoset.php'の$pdoをグローバル宣言
+     $table_name = self::$table_name; // sql分に直接書き込めないので変数格納
+     $sql = $pdo->prepare("INSERT INTO {$table_name} (title, description, image, image_type, body, user_id) VALUES (:title, :description, :image, :image_type, :body, :user_id)");
+     $sql->bindParam(':title', $this->title);
+     $sql->bindParam(':description', $this->description);
+     $sql->bindParam(':image', $this->image);
+     $sql->bindParam(':image_type', $this->image_type);
+     $sql->bindParam(':body', $this->body);
+     $sql->bindParam(':user_id', $this->user_id);
+     $sql->execute();
+
+     $this->id = $pdo->lastinsertid();
+
+    return true;
+
+    } catch (PDOException $e) {
+      return $e->getMessage();
+    }
+  }
 
   // データ更新メソッド
   public function update($post) {

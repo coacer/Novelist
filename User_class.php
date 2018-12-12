@@ -2,7 +2,7 @@
 require('password_functions.php');
 class User {
   
-  protected $table_name = 'users'; // テーブル名定義
+  protected static $table_name = 'users'; // テーブル名定義
   public $id;
   public $name;
   public $email;
@@ -23,16 +23,14 @@ class User {
   public static function findBy($colName, $value) {
     try {
 
-      $new_user = new self;
       global $pdo; // 'dbinfoset.php'の$pdoをグローバル定義
-      $sql = "SELECT * FROM {$new_user->table_name} where {$colName}='{$value}'";
+      $table_name = self::$table_name;
+      $sql = "SELECT * FROM {$table_name} where {$colName}='{$value}'";
       $result = $pdo->query($sql);
       $result = $result->fetch();
-
+      
+      $new_user = new self($result['name'], $result['email'], $result['password']);
       $new_user->id = $result['id'];
-      $new_user->name = $result['name'];
-      $new_user->email = $result['email'];
-      $new_user->password = $result['password'];
 
       return $new_user;
       
@@ -47,9 +45,9 @@ class User {
   public function save() {
     try {
       global $pdo; // 'dbinfoset.php'の$pdoをグローバル定義
-
+      $table_name = self::$table_name;
       // emailの被りがないか検証
-      $sql = "SELECT email FROM {$this->table_name} where email='{$this->email}'";
+      $sql = "SELECT email FROM {$table_name} where email='{$this->email}'";
       $result = $pdo->query($sql);
       $result = $result->fetch();
 
@@ -58,7 +56,7 @@ class User {
       }
       
       // DBに値を格納
-      $sql = $pdo->prepare("INSERT INTO {$this->table_name} (name, email, password) VALUES (:name, :email, :password)");
+      $sql = $pdo->prepare("INSERT INTO {$table_name} (name, email, password) VALUES (:name, :email, :password)");
       $sql->bindParam(':name', $this->name);
       $sql->bindParam(':email', $this->email);
       $sql->bindParam(':password', password_hash($this->password)); // passwordをハッシュ化して保存
