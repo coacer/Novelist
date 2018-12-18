@@ -19,7 +19,13 @@ require('dbinfoset.php');
 
   // $sql = "ALTER TABLE posts ADD image_type char(50) AFTER image";
   // $stmt = $pdo->query($sql);
-  
+
+  // メール認証機能に必要なカラム挿入
+  $sql = "ALTER TABLE users ADD urltoken char(130) NOT NULL,
+                            ADD date datetime NOT NULL,
+                            ADD activated tinyint(1) NOT NULL DEFAULT 0";
+  $stmt = $pdo->query($sql);  
+
   // データベースリセット
   // $sql ="DELETE FROM users";
   // $stmt = $pdo->query($sql);

@@ -22,10 +22,40 @@ if (!empty($_POST['signup'])) {
   $password_confirmation = $_POST['password_confirmation'];
   if (!empty($username) && !empty($email) && !empty($password) && !empty($password_confirmation) && $password === $password_confirmation) {
     $user = new User($username, $email, $password);
+
     if($user->save()) {
-      login($user);
-      setFlash("新規登録が完了しました");
-      header('location: posts_index.php');
+      // urltokenを元にURL生成
+      $urltoken = $user->urltoken;
+      $url = "http://tt-701.99sv-coco.com/mission_6-1/signup_check.php?urltoken=" . $urltoken;
+
+      //メールの宛先
+      $mailTo = $user->email;
+      
+	    //Return-Pathに指定するメールアドレス
+      $returnMail = 'web@sample.com';
+    
+      $name = "Novelist";
+      $mail = 'web@sample.com';
+      $subject = "【Novelist】会員登録用URLのお知らせ";
+    
+$body = <<< EOM
+24時間以内に下記のURLからご登録下さい。
+{$url}
+EOM;
+
+      mb_language('ja');
+      mb_internal_encoding('UTF-8');
+    
+      //Fromヘッダーを作成
+      $header = 'From: ' . mb_encode_mimeheader($name). ' <' . $mail. '>';
+    
+      if (mb_send_mail($mailTo, $subject, $body, $header, '-f'. $returnMail)) {
+        header('location: signup_mail_check.php');
+        exit();
+      } else {
+        $error_message = "メールの送信に失敗しました";
+      }	
+
     } else {
       $error_message = "このメールアドレスは既に登録済みです";
     }
