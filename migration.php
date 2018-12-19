@@ -14,6 +14,8 @@ require('dbinfoset.php');
   $sql = "ALTER TABLE users CHANGE password password char(100) NOT NULL";
   $stmt = $pdo->query($sql);
 
+  $sql = "ALTER TABLE users CHANGE email email char(100) NOT NULL";
+
   $sql = "ALTER TABLE posts CHANGE image image LONGBLOB";
   $stmt = $pdo->query($sql);
 
@@ -87,6 +89,13 @@ foreach ($result as $row) {
 }
 echo "<hr>";
 
+$sql ='SHOW CREATE TABLE users';
+	$result = $pdo->query($sql);
+	foreach ($result as $row) {
+	  print_r($row);
+	}
+	echo "<hr>";
+
 // User一覧
 $sql = 'select * from users';
   $results = $pdo->query($sql);
@@ -95,6 +104,8 @@ $sql = 'select * from users';
     echo $value['name'] . "<br>";
     echo $value['email'] . "<br>";
     echo $value['password'] . "<br>";
+    echo $value['urltoken'] . "<br>";
+    echo $value['activated'] . "<br>";
   }
   // $results = $results->fetchAll();
 

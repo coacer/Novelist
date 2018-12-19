@@ -16,7 +16,7 @@ class User {
   // Userインスタンス生成メソッド
   public function __construct($name, $email, $password) {
     // urltoken生成
-    $urltoken = hash('sha256',uniqid(rand(),1));
+    $urltoken = sha1(uniqid(rand(),1));
 
     // 値をプロパティに格納
     $this->name = $name;
@@ -26,12 +26,12 @@ class User {
   }
 
   // データ抽出メソッド
-  public static function findBy($colName, $value) {
+  public static function findBy($colName, $value, $activated = 1) {
     try {
 
       global $pdo; // 'dbinfoset.php'の$pdoをグローバル定義
       $table_name = self::$table_name;
-      $sql = "SELECT * FROM {$table_name} where {$colName}='{$value}'";
+      $sql = "SELECT * FROM {$table_name} where {$colName}='{$value}' AND activated={$activated}";
       $result = $pdo->query($sql);
       $result = $result->fetch();
       
@@ -46,7 +46,29 @@ class User {
     } catch (PDOException $e) {
       echo $e->getMessage();
     }
-  } 
+  }
+
+  // urltokenをキーに無効化userインスタンスを取得するメソッド
+  public static function findByUrltoken($urltoken) {
+    try {
+      global $pdo;
+      $table_name = self::$table_name;
+      $sql = "SELECT * FROM {$table_name} WHERE urltoken='{$urltoken}' AND activated='0' AND date > now() - interval 24 hour";
+      $result = $pdo->query($sql);
+      $result = $result->fetch();
+
+      $new_user = new self($result['name'], $result['email'], $result['password']);
+      $new_user->id = $result['id'];
+      $new_user->urltoken = $result['urltoken'];
+      $new_user->date = $result['date'];
+      $new_user->activated = $result['activated'];
+
+      return $new_user;
+      
+    } catch (PDOException $e) {
+      return $e->getMessage();
+    }
+  }
 
   // インスタンスメソッド
 
@@ -56,7 +78,7 @@ class User {
       global $pdo; // 'dbinfoset.php'の$pdoをグローバル定義
       $table_name = self::$table_name;
       // emailの被りがないか検証
-      $sql = "SELECT email FROM {$table_name} where email='{$this->email}' AND activated='1'";
+      $sql = "SELECT email FROM {$table_name} where email='{$this->email}' AND activated=1";
       $result = $pdo->query($sql);
       $result = $result->fetch();
 
@@ -79,27 +101,22 @@ class User {
     }
   }
 
-  // urltokenをキーに無効化userインスタンスを取得するメソッド
-  public function findByUrltoken($urltoken) {
+  // user有効化メソッド
+  public function active() {
     try {
       global $pdo;
       $table_name = self::$table_name;
-      $sql = "SELECT * FROM {$table_name} WHERE urltoken='{$urltoken}' AND activated='0' AND date > now() - interval 24 hour";
-      $result = $pdo->query($sql);
-      $result = $result->fetch();
 
-      $new_user = new self($result['name'], $result['email'], $result['password']);
-      $new_user->id = $result['id'];
-      $new_user->urltoken = $result['urltoken'];
-      $new_user->date = $result['date'];
-      $new_user->activated = $result['activated'];
+      $sql = "UPDATE $table_name SET activated=1 WHERE id='{$this->id}'";
+      $stmt = $pdo->query($sql);
 
-      return $new_user;
-      
+      $this->activated = 1;
+
     } catch (PDOException $e) {
       return $e->getMessage();
     }
   }
+
 
 }
 

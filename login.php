@@ -20,7 +20,7 @@ if (!empty($_POST['login'])) {
     $error_message = "パスワードを入力してください";
   } else {
     $user = User::findby('email', $email);
-    if (password_verify($password, $user->password)) {
+    if (password_verify($password, $user->password) && $user->activated == 1) {
       setFlash("ログインしました");
       login($user);
       header('location: posts_index.php');
