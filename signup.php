@@ -41,6 +41,8 @@ if (!empty($_POST['signup'])) {
 $body = <<< EOM
 24時間以内に下記のURLからご登録下さい。
 {$url}
+-----------------------------------------------------------
+Novelist: http://tt-701.99sv-coco.com/mission_6-1/index.php
 EOM;
 
       mb_language('ja');
