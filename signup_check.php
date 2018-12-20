@@ -14,7 +14,7 @@ if (loginState()) {
 $urltoken = $_GET['urltoken'];
 
 $user = User::findByUrltoken($urltoken);
-var_dump($user);
+
 ?>
 
 <main>
